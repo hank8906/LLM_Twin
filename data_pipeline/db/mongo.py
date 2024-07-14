@@ -10,6 +10,7 @@ class MongoDatabaseConnector:
     _instance: MongoClient = None
 
     def __new__(cls, *args, **kwargs):
+        """Constructor for MongoDatabaseConnector"""
         if cls._instance is None:
             try:
                 cls._instance = MongoClient(settings.MONGO_DATABASE_HOST)
@@ -23,9 +24,11 @@ class MongoDatabaseConnector:
         return cls._instance
 
     def get_database(self):
+        """Returns the database name"""
         return self._instance[settings.MONGO_DATABASE_NAME]
 
     def close(self):
+        """Close the database connection"""
         if self._instance:
             self._instance.close()
             print("Connected to database has been closed.")

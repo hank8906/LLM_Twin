@@ -42,6 +42,7 @@ class BaseDocument(BaseModel):
         return parsed
 
     def save(self, **kwargs):
+        """save document to MongoDB"""
         collection = _database[self._get_collection_name()]
 
         try:
@@ -54,6 +55,7 @@ class BaseDocument(BaseModel):
 
     @classmethod
     def get_or_create(cls, **filter_options) -> Optional[str]:
+        """find document by filter_options, if not then create one"""
         collection = _database[cls._get_collection_name()]
         try:
             instance = collection.find_one(filter_options)
@@ -69,6 +71,7 @@ class BaseDocument(BaseModel):
 
     @classmethod
     def bulk_insert(cls, documents: List, **kwargs) -> Optional[List[str]]:
+        """batchly insert documents into mongoDB"""
         collection = _database[cls._get_collection_name()]
         try:
             result = collection.insert_many(
